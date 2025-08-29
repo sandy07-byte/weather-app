@@ -25,7 +25,8 @@ function App() {
   const [unit, setUnit] = useState("metric");
   const [favorites, setFavorites] = useState([]);
 
-  const API_KEY = "d7165faf65653253af69abbaae721431";
+const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
+
 
   const getWeather = async (cityName) => {
     if (!cityName) return;
