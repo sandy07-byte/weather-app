@@ -15,8 +15,8 @@ import {
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend);
 
 function App() {
-  const defaultCity = "New Delhi"; // Default city for initial load
-  const [city, setCity] = useState(""); // Input field is empty
+  const defaultCity = "New Delhi";
+  const [city, setCity] = useState("");
   const [weather, setWeather] = useState(null);
   const [forecast, setForecast] = useState([]);
   const [error, setError] = useState("");
@@ -25,8 +25,8 @@ function App() {
   const [unit, setUnit] = useState("metric");
   const [favorites, setFavorites] = useState([]);
 
-const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
-
+  
+  const API_KEY = "d7165faf65653253af69abbaae721431";
 
   const getWeather = async (cityName) => {
     if (!cityName) return;
@@ -52,12 +52,10 @@ const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
     }
   };
 
-  // Load default city weather on mount
   useEffect(() => {
     getWeather(defaultCity);
   }, [unit]);
 
-  // Load favorites from localStorage
   useEffect(() => {
     const saved = JSON.parse(localStorage.getItem("favorites")) || [];
     setFavorites(saved);
@@ -77,9 +75,19 @@ const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
     localStorage.setItem("favorites", JSON.stringify(updated));
   };
 
-  // Prepare chart data
+  const getWeatherImage = (condition) => {
+    if (!condition) return "/weather-icons/sunny.png"; // default
+    condition = condition.toLowerCase();
+    if (condition.includes("rain")) return "/weather-icons/rain.png";
+    if (condition.includes("cloud")) return "/weather-icons/cloudy.png";
+    if (condition.includes("sun") || condition.includes("clear")) return "/weather-icons/sunny.png";
+    return "/weather-icons/sunny.png";
+  };
+
   const chartData = {
-    labels: forecast.map((f) => new Date(f.dt * 1000).toLocaleTimeString([], { hour: "2-digit" })),
+    labels: forecast.map((f) =>
+      new Date(f.dt * 1000).toLocaleTimeString([], { hour: "2-digit" })
+    ),
     datasets: [
       {
         label: `Temperature (${unit === "metric" ? "°C" : "°F"})`,
@@ -103,7 +111,9 @@ const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
             value={city}
             onChange={(e) => setCity(e.target.value)}
           />
-          <button onClick={() => getWeather(city || defaultCity)}>Search</button>
+          <button className="search-btn" onClick={() => getWeather(city || defaultCity)}>
+            🔍
+          </button>
           <div className="toggles">
             <button className="toggle-btn dark" onClick={() => setDarkMode(!darkMode)}>
               {darkMode ? "🌞" : "🌙"}
@@ -129,11 +139,13 @@ const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
           <div className="current-weather">
             <h2>{weather.name}</h2>
             <img
-              src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
-              alt="Weather Icon"
+              src={getWeatherImage(weather.weather[0].main)}
+              alt={weather.weather[0].description}
             />
             <p className="condition">{weather.weather[0].description}</p>
-            <p className="temp">{Math.round(weather.main.temp)}°{unit === "metric" ? "C" : "F"}</p>
+            <p className="temp">
+              {Math.round(weather.main.temp)}°{unit === "metric" ? "C" : "F"}
+            </p>
             <p className="feels">Feels like {Math.round(weather.main.feels_like)}°</p>
             <p className="humidity">💧 Humidity: {weather.main.humidity}%</p>
           </div>
@@ -156,8 +168,13 @@ const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
             <div className="forecast">
               {forecast.map((f, i) => (
                 <div key={i} className="forecast-card">
-                  <p>{new Date(f.dt * 1000).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</p>
-                  <img src={`https://openweathermap.org/img/wn/${f.weather[0].icon}.png`} alt="forecast" />
+                  <p>
+                    {new Date(f.dt * 1000).toLocaleTimeString([], {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
+                  </p>
+                  <img src={getWeatherImage(f.weather[0].main)} alt="forecast" />
                   <p>{Math.round(f.main.temp)}°</p>
                 </div>
               ))}
@@ -189,22 +206,16 @@ const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
                     display: "flex",
                     alignItems: "center",
                     gap: "6px",
-                    background: darkMode ? "#333" : "#f5f5f5",
+                    background: "#f5f5f5",
                     padding: "6px 10px",
                     borderRadius: "8px",
                     boxShadow: "0 2px 6px rgba(0,0,0,0.2)",
                   }}
                 >
-                  <button
-                    className="toggle-btn unit"
-                    onClick={() => getWeather(fav)}
-                  >
+                  <button className="toggle-btn unit" onClick={() => getWeather(fav)}>
                     {fav}
                   </button>
-                  <button
-                    className="remove-btn"
-                    onClick={() => removeFavorite(fav)}
-                  >
+                  <button className="remove-btn" onClick={() => removeFavorite(fav)}>
                     ❌
                   </button>
                 </div>

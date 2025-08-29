@@ -1,4 +1,4 @@
-
+/* ===== Global App Styles ===== */
 .app {
   text-align: center;
   font-family: 'Arial', sans-serif;
@@ -25,6 +25,8 @@
   );
   color: #f1f1f1;
 }
+
+/* ===== Header ===== */
 h1 {
   margin-bottom: 25px;
   font-size: 2.2rem;
@@ -39,19 +41,27 @@ h1:hover {
   -webkit-text-fill-color: transparent;
   transform: scale(1.03);
 }
+
+/* ===== Weather Card ===== */
 .weather-card {
-  background: rgba(255, 255, 255, 0.95);
-  color: black;
+  background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(245,245,255,0.9));
+  color: #1a1a1a;
   padding: 25px;
   border-radius: 20px;
   max-width: 520px;
   margin: 0 auto;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-  transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+  transition: background 0.4s ease, color 0.3s ease, transform 0.3s ease;
+}
+.app.dark .weather-card {
+  background: linear-gradient(135deg, rgba(15,40,60,0.9), rgba(30,50,80,0.9));
+  color: #f1f1f1;
 }
 
+
+
 .app.dark .weather-card {
-  background: rgba(25, 25, 25, 0.85);
+  background: linear-gradient(145deg, rgba(15,40,60,0.85), rgba(30,50,80,0.85));
   color: #f1f1f1;
 }
 
@@ -59,6 +69,8 @@ h1:hover {
   transform: translateY(-4px);
 }
 
+
+/* ===== Search Container ===== */
 .search-container {
   display: flex;
   align-items: center;
@@ -67,10 +79,10 @@ h1:hover {
   flex-wrap: wrap;
 }
 
-
+/* Rounded search input */
 .search-container input {
-  padding: 12px;
-  border-radius: 10px;
+  padding: 12px 20px;          /* Extra horizontal padding for rounded look */
+  border-radius: 50px;         /* Fully rounded */
   border: 1px solid #ccc;
   flex: 1;
   outline: none;
@@ -83,21 +95,26 @@ h1:hover {
   border: 2px solid #6c63ff;
 }
 
-.search-container button {
-  padding: 12px 18px;
-  border-radius: 10px;
+/* Rounded search button */
+.search-btn {
+  background: #ff9900;
   border: none;
-  background: #ffcc00;
-  font-weight: bold;
+  color: white;
+  padding: 12px 20px;          /* Match input padding */
+  border-radius: 50px;         /* Fully rounded */
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transition: background 0.3s ease, transform 0.2s ease;
 }
 
-.search-container button:hover {
-  background: #ffdd33;
+.search-btn:hover {
+  background: #e68a00;
   transform: translateY(-2px);
 }
 
+/* ===== Toggles ===== */
 .toggles {
   display: flex;
   gap: 10px;
@@ -128,6 +145,7 @@ h1:hover {
   opacity: 0.85;
 }
 
+/* ===== Add Favorite Button ===== */
 .add-favorite-btn {
   padding: 10px 16px;
   border-radius: 12px;
@@ -145,24 +163,11 @@ h1:hover {
   box-shadow: 0 6px 15px rgba(255, 126, 95, 0.4);
 }
 
+/* ===== Current Weather ===== */
 .current-weather {
   text-align: center;
   margin-top: 15px;
 }
-
-
-
-.current-weather p {
-  transition: color 0.3s ease, transform 0.2s ease;
-  cursor: pointer;
-}
-
-.current-weather p:hover {
-  color: #6c63ff; 
-  transform: translateY(-2px);
-  font-weight: 600;
-}
-
 
 .current-weather h2 {
   margin-bottom: 10px;
@@ -178,6 +183,17 @@ h1:hover {
 
 .current-weather img {
   width: 90px;
+}
+
+.current-weather p {
+  transition: color 0.3s ease, transform 0.2s ease;
+  cursor: pointer;
+}
+
+.current-weather p:hover {
+  color: #6c63ff; 
+  transform: translateY(-2px);
+  font-weight: 600;
 }
 
 .condition {
@@ -204,7 +220,7 @@ h1:hover {
   font-weight: bold;
 }
 
-/* Forecast container */
+/* ===== Forecast Cards ===== */
 .forecast {
   display: flex;
   gap: 15px;
@@ -223,44 +239,35 @@ h1:hover {
 
 .forecast-card {
   min-width: 80px;
-  background: rgba(255, 255, 255, 0.9);
-  color: black;
+  background: linear-gradient(145deg, rgba(255,255,255,0.9), rgba(245,245,255,0.9));
+  color: #1a1a1a;
   border-radius: 16px;
   padding: 12px;
   text-align: center;
-  box-shadow: 0 5px 12px rgba(0,0,0,0.2);
+  box-shadow: 0 5px 12px rgba(0,0,0,0.15);
   transition: transform 0.3s ease, background 0.3s ease;
   flex-shrink: 0;
 }
 
 .app.dark .forecast-card {
-  background: rgba(35, 35, 35, 0.8);
+  background: linear-gradient(145deg, rgba(20,40,60,0.85), rgba(30,50,80,0.85));
   color: #f1f1f1;
 }
 
 .forecast-card:hover {
   transform: translateY(-4px);
-  background: rgba(255, 255, 255, 1);
+  background: linear-gradient(135deg, #ffcc70, #ff7e5f);
+}
+
+.app.dark .forecast-card:hover {
+  background: linear-gradient(135deg, #009977, #006644);
 }
 
 .forecast-card img {
   width: 50px;
 }
 
-@media (max-width: 600px) {
-  h1 { font-size: 1.8rem; }
-  .weather-card { padding: 18px; }
-  .current-weather h2 { font-size: 1.4rem; }
-  .temp { font-size: 26px; }
-  .condition { font-size: 14px; }
-  .forecast-card { min-width: 70px; padding: 8px; }
-  .forecast-card img { width: 40px; }
-}
-
-@media (min-width: 601px) and (max-width: 900px) {
-  .weather-card { max-width: 420px; }
-  .forecast-card { min-width: 75px; padding: 9px; }
-}
+/* ===== Favorites ===== */
 .favorite-item {
   transition: transform 0.2s ease, background 0.3s;
 }
@@ -270,7 +277,6 @@ h1:hover {
 }
 
 .remove-btn {
-  background: #6c63ff; 
   border: none;
   color: white;
   font-size: 14px;
@@ -280,10 +286,6 @@ h1:hover {
   transition: background 0.3s ease, transform 0.2s ease;
 }
 
-.remove-btn:hover {
-  background: #4a3fc5; 
-  transform: scale(1.05);
-}
 .app.dark .remove-btn {
   background: #00c49a; 
 }
@@ -299,6 +301,8 @@ h1:hover {
 .app:not(.dark) .remove-btn:hover {
   background: #4a3fc5;
 }
+
+/* ===== 2-Hour Prediction ===== */
 .prediction {
   margin-top: 15px;
   font-size: 16px;
@@ -324,3 +328,18 @@ h1:hover {
   color: #ff9900;
 }
 
+/* ===== Responsive ===== */
+@media (max-width: 600px) {
+  h1 { font-size: 1.8rem; }
+  .weather-card { padding: 18px; }
+  .current-weather h2 { font-size: 1.4rem; }
+  .temp { font-size: 26px; }
+  .condition { font-size: 14px; }
+  .forecast-card { min-width: 70px; padding: 8px; }
+  .forecast-card img { width: 40px; }
+}
+
+@media (min-width: 601px) and (max-width: 900px) {
+  .weather-card { max-width: 420px; }
+  .forecast-card { min-width: 75px; padding: 9px; }
+}
